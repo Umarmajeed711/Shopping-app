@@ -1,0 +1,35 @@
+
+
+.footer{
+    padding: 5px;
+    background-color:#f1e9e9;
+    color:gray ;
+} 
+/* style={{color: "#fff", paddingLeft: 20, textDecoration: "none"}} */
+
+.link{
+    text-decoration: none;
+    color: black;
+    transition: all .3s;
+}
+
+.link:hover, .link:active{
+  text-decoration: underline;
+  text-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+input{
+    border: 1px solid transparent;
+    outline: none;
+    border-bottom: 1px solid black;
+}
+
+.subcribe{
+    font-weight: 500;
+    transition: all .5s;
+}
+.subscribe:hover , .subscribe:active{
+    box-shadow: 0 0 3px rgba(0,0,0,0.8);
+    border-radius: 2px ;
+    border: 1px solid black
+}

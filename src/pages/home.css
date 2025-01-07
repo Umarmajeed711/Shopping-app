@@ -1,0 +1,37 @@
+
+.Top{
+    display: flex;
+    justify-content: center;
+    column-gap: 50px;
+}
+
+.toplinks{
+    background-color:#f1e9e9 ;
+    padding: 2px 5px;
+    border: 1px solid gray;
+    transition: all .3s;
+    color: black;
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.toplinks:hover , .toplinks:active{
+    background-color: rgb(29, 26, 26);
+    color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+/* category options */
+.options{
+    background-color: black;
+    color: white;
+    border-bottom: 1px solid rgb(219, 215, 215);
+}
+
+
+.mycard:hover , .mycard:active{
+    transition: all .5s;
+    transform: translateY(-10px);
+    box-shadow: 0px 0px 5px rgb(0,0,0) !important;
+    border: 1px solid gray;
+}
