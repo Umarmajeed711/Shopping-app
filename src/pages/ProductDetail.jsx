@@ -3,12 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Rating from "@mui/material/Rating";
 import "./product.css"
+import Cart from "./Cart";
 
 const ProductDetail = () => {
   const { id } = useParams();
 
   const [productDetail, setProductDetail] = useState({});
   const [counter,setCounter] = useState(1)
+
+
+ 
 
   useEffect(() => {
     axios
@@ -59,7 +63,7 @@ const ProductDetail = () => {
           <p>{productDetail?.description}</p>
 
           <h5>Stock: {productDetail?.stock}</h5>
-          <p>Shipping Inofrmation: {productDetail?.shippingInformation}</p>
+          <p>Shipping Information: {productDetail?.shippingInformation}</p>
           <p>Warranty Information: {productDetail?.warrantyInformation}</p>
           <hr />
 
@@ -97,7 +101,7 @@ const ProductDetail = () => {
             </span>
 
             <p>
-              <button class="addCard">Add to Card</button>
+              <button class="addCard" >Add to Card</button>
             </p>
           </div>
         </div>
@@ -134,6 +138,9 @@ const ProductDetail = () => {
           );
         })}
       </div>
+
+
+       <Cart product={productDetail} counter={counter}/>
     </div>
   );
 };

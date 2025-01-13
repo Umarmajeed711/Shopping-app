@@ -33,3 +33,14 @@ nav ul {
   text-shadow: 0 0 2px rgba(0,0,0,0.5);
 }
 
+
+.logout{
+  border: none;
+  background-color: rgb(192, 182, 182);
+  transition: all .3s;
+}
+
+.logout:hover , .logout:active {
+  background-color: rgb(88, 85, 85);
+  color: #fff;
+}

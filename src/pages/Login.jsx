@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Alert, Button, Snackbar, TextField } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
 import { useNavigate } from "react-router";
+import { GlobalContext } from "../context/Context";
+import "./home.css";
+
+import logo from "../assets/image.png";
 
 const Login = () => {
+  // context api
+  let { state, dispatch } = useContext(GlobalContext);
+  // state =  get the value
+  // dispatch = set the value
+
   // State for error Message
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -39,7 +48,7 @@ const Login = () => {
   // initailizes the loginFormik
   const loginFormik = useFormik({
     initialValues: {
-      userName:"",
+      userName: "",
       password: "",
     },
 
@@ -53,7 +62,14 @@ const Login = () => {
         })
         .then((response) => {
           console.log("response :", response);
-          navigateToHome("/");
+          // here we are set the type is "USER_LOGIN" and payload = response.data;
+          dispatch({ type: "USER_LOGIN", payload: response.data });
+
+          // save the access token in the local storage
+          localStorage.setItem("userToken" , response?.data?.accessToken)
+
+          // navigate to the home page
+          setTimeout(() => {navigateToHome("/home")}, 5)
         })
         .catch((error) => {
           console.log("Error :", error);
@@ -68,62 +84,95 @@ const Login = () => {
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            height:"100vh",
-            
+            height: "100vh",
           }}
         >
-          <div style={{border:"1px solid black",margin:"50px", padding:"20px",
-            display:"flex", justifyContent:"center",alignItems:"center",flexDirection:"column",height:"50%",
+          {/* login div */}
+          <div
+            className="d-flex justify-content-evenly gap-5 align-items-center p-5"
+            style={{
+              border: " 2px solid gray",
+              height: "60%",
+              borderRadius: "5px",
+              boxShadow: "0 0 5px black",
+              backgroundColor: "#f1e9e9",
+            }}
+          >
+            {/* image div */}
+            <div>
+              <h3 style={{ textAlign: "center" }}>HUB</h3>
+              <img
+                src={logo}
+                alt="logo"
+                width={200}
+                height={200}
+                style={{ borderRadius: "50%", boxShadow: "0 0 5px black" }}
+              />
+            </div>
 
-            border:" 2px solid #1976D2",
-            borderRadius:"5px"
-          }}>
-          {/* user Name input field */}
-          <TextField
-            name="userName"
-            label="User Name"
-            value={loginFormik.values.userName}
-            onChange={loginFormik.handleChange}
-            error={
-              loginFormik.touched.userName &&
-              Boolean(loginFormik.errors.userName)
-            }
-            helperText={
-              loginFormik.touched.userName && loginFormik.errors.userName
-            }
-          />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <h1
+                style={{
+                  textAlign: "center",
+                  padding: "20px",
+                  color: "#f1e9e9",
+                  textShadow: "1px 1px 5px rgba(0,0,0,1)",
+                }}
+              >
+                Login
+              </h1>
+              {/* user Name input field */}
+              <TextField
+                name="userName"
+                label="User Name"
+                value={loginFormik.values.userName}
+                onChange={loginFormik.handleChange}
+                error={
+                  loginFormik.touched.userName &&
+                  Boolean(loginFormik.errors.userName)
+                }
+                helperText={
+                  loginFormik.touched.userName && loginFormik.errors.userName
+                }
+              />
 
-          <br />
+              <br />
 
-          {/* password Input field */}
+              {/* password Input field */}
 
-          <TextField
-            name="password"
-            label="password"
-            value={loginFormik.values.password}
-            onChange={loginFormik.handleChange}
-            error={
-              loginFormik.touched.password &&
-              Boolean(loginFormik.errors.password)
-            }
-            helperText={
-              loginFormik.touched.password && loginFormik.errors.password
-            }
-          />
+              <TextField
+                name="password"
+                label="password"
+                value={loginFormik.values.password}
+                onChange={loginFormik.handleChange}
+                error={
+                  loginFormik.touched.password &&
+                  Boolean(loginFormik.errors.password)
+                }
+                helperText={
+                  loginFormik.touched.password && loginFormik.errors.password
+                }
+              />
 
-          <br />
+              <br />
 
-          {/* login Button */}
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button color="primary" variant="outlined" type="submit">
-              Login
-            </Button>
+              {/* login Button */}
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button color="primary" variant="outlined" type="submit">
+                  Login
+                </Button>
+              </div>
+            </div>
           </div>
-
-         </div>
           {/* Snackbar for showing error */}
           <Snackbar
             open={alertOpen}
