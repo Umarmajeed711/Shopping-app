@@ -5,7 +5,9 @@ export const GlobalContext = createContext("Initial Value");
 
 let data = {
     user: {},
-    isLogin: null
+    isLogin: null,
+    // cart:[{}]
+
 }
 
 export default function ContextProvider({ children }) {

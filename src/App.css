@@ -1,6 +1,130 @@
-
-
-.options{
-  background-color: black;
-  color: white;
+/* 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  gap: 30px;
+  background-color: black;
+  overflow: hidden;
+ 
+}
+
+
+.formDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border:1px solid #00dfc4;
+  border-radius: 3px;
+  box-shadow:0 0 3px #00dfc4;
+  color: #fff; 
+}
+.loginHeading{
+  color: #fff;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.forget{
+  color: #2d73bd;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.loginWith{
+  border:1px solid #00dfc4;
+  padding: 2px;
+  background-color: #1d2b3a;
+  color: #fff;
+  border-radius: 2px;
+  transition: all .3s;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.loginWith:hover , .loginWith:active{
+  background-color: #00dfc4;
+  color: #1d2b3a;
+}
+
+
+
+.inputBox {
+  position: relative;
+  width: 250px;
+
+}
+
+.inputBox input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background-color: #1d2b3a;
+  background-color: #000;
+  border-radius: 5px;
+  outline: none;
+  color: #fff;
+  font-size: 1em;
+  transition: 0.5s;
+}
+
+.inputBox span{
+  position: absolute;
+  left: 0;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 1em;
+  color: rgba(255,255,255,0.25);
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.inputBox input:valid ~ span ,
+.inputBox input:focus ~ span
+{
+
+  color: #00dfc4;
+  transform: translateX(10px) translateY(-7px);
+  font-size: 0.65em;
+  padding: 0 10px;
+  background: #1d2b3a;
+  border-left: 1px solid #00dfc4;
+  border-right: 1px solid #00dfc4;
+  letter-spacing: 0.2em;
+}
+
+
+.inputBox input:valid ,
+.inputBox input:focus
+{
+
+  border: 1px solid #00dfc4;
+  
+}
+
+.button{
+  border: 1px solid #00dfc4;
+  border-radius: 5px;
+  padding: 5px 12px;
+  background-color: #1d2b3a;
+  color: #00dfc4;
+}
+
+.button:hover , .button:active{
+  background-color: #00dfc4;
+  color: #1d2b3a;
+  box-shadow:0 0 3px #00dfc4;
+}
+
+.requiredError{
+  color:red;
+  margin: 0;
+  font-size: 12px;
+} */

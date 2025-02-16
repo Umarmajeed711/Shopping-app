@@ -1,10 +1,57 @@
+.home{
+    background-color: #000;
+    overflow: hidden;
+  }
 
-
-.fields{
-    transition: all .3s;
+.FileDiv{
+    /* style={{ position:"relative",height:"50px", border:"1px solid green"
+        ,display:"flex",alignItems:'center',justifyContent:"center"}} */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 30px;
+    border:1px solid #00dfc4;
+    color: #00dfc4;
+}
+.profile{
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #00dfc4;
+    box-shadow:0 0 10px #00dfc4;
+    width: 300px;
+    height: fit-content;
+}
+.editIcon{
+    border: 1px solid transparent;
+    cursor: pointer;
+    color: #00dfc4;
+    font-size: 20px;
+}
+.editIcon:hover ,.editIcon:active{
+    /* border: 1px solid #00dfc4; */
+    box-shadow:0 0 10px #00dfc4;
+}
+.verified{
+    border: 1px solid green;
+    padding: 1px 3px;
+    border-radius: 3px;
+    background-color: rgb(82, 214, 82);;
+    color:#000;
+    box-shadow: 0 0 3px  rgb(82, 214, 82);
+}
+.verifyNow{
+    border: 1px solid green;
+    padding: 3px ;
+    cursor: pointer;
+    background: #000;
+    color:rgb(82, 214, 82);
+    box-shadow: 0 0 3px  rgb(82, 214, 82);
 }
 
-.fields:hover , .fields:active {
-    box-shadow: 0px 0px 5px rgb(0,0,0) !important;
-    border: 1px solid gray;
+.verified:hover , .verifyNow:active{
+   
+    background:rgb(82, 214, 82);
+    color:#000;
+    box-shadow: 0 0 3px  rgb(82, 214, 82);
 }

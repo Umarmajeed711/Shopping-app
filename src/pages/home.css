@@ -1,41 +1,170 @@
 
-.Top{
-    display: flex;
-    justify-content: center;
-    column-gap: 50px;
-}
+.home{
+    background-color: #000;
+  }
 
-.toplinks{
-    background-color:#f1e9e9 ;
-    padding: 2px 5px;
-    border: 1px solid gray;
-    transition: all .3s;
-    color: black;
+  .homePage{
+    min-height: 100vh;
+    margin-top: 10%;
+    color: #fff;
+  }
+
+.seeProfile{
+    color: #00dfc4;
     text-decoration: none;
-    font-size: 21px;
+    transition: all .3s;
+}
+
+.seeProfile:hover , .seeProfile:active{
+    text-shadow: 0 0 10px #00dfc4;
+}
+
+
+/* Post page css */
+
+.textArea{
+    width: 300px;
+    height: 70px;
+    padding: 5px;
+    background-color: transparent;
+    color: #fff;
+    outline: none;
+    border:1px solid #00dfc4;
+    transition: all .3s;
+}
+
+.textArea:focus , .textArea:active {
+    box-shadow:0 0 3px #00dfc4;
+}
+
+.postbutton{
+    border:1px solid #00dfc4;
+    box-shadow:0 0 3px #00dfc4;
+    border-radius: 3px;
+    padding: 3px;
+    background-color: transparent;
+    color: #00dfc4;
+    transition: all .3s;
+}
+
+.postbutton:hover , .postbutton:active{
+    background-color: #00dfc4;
+    color:  #1d2b3a;
+}
+
+.post{
+    border: 1px solid #00dfc4;
+    color: #fff;
+    padding: 10px;
+    width: 300px;
+    position: relative;
+    display: inline-block;
+}
+
+.userImage{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%; 
+}
+.userName{
+    font-size: 18px;
     font-weight: 500;
+    margin-bottom: 0;
+}
+.postTime{
+    font-size: 14px;
+    margin-top: 0;
 }
 
-.toplinks:hover , .toplinks:active{
-    background-color: rgb(29, 26, 26);
-    color: white;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-}
-/* category options */
-.options{
-    background-color: black;
-    color: white;
-    border-bottom: 1px solid rgb(219, 215, 215);
+.like{
+    color: #00dfc4;
+    font-size: 22px;
+    cursor: pointer;
 }
 
+.likeText{
+    font-size: 14px !important;
+}
 
-.mycard:hover , .mycard:active{
-    transition: all .5s;
-    transform: translateY(-10px);
-    box-shadow: 0px 0px 5px rgb(0,0,0) !important;
-    border: 1px solid gray;
+.likeIcon{
+    background-color: transparent;
+    transition: all .3s;
+}
+
+.likeIcon:active{
+    transform: translateY(-15px)
+}
+
+.totalLikes{
+    font-size: 12px;
+    padding-top: 2px;
+    margin-top: 2px;
+    margin: 0;
+    padding: 0;
+    color: #cbd1d6;
+}
+
+/* comment section css */
+
+.commentSection{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    backdrop-filter: blur(50px);
+    background-color: #000;
+    opacity: 1;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+}
+
+.postComment{
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    overflow: auto;
+}
+
+.singleComment{
+    border:1px solid #00dfc4;
 }
 
 
+.commentField{
+    padding: 2px;
+    background-color: transparent;
+    color: #fff;
+    outline: none;
+    border:1px solid #00dfc4;
+    transition: all .3s;
+    width: 80%;
+}
+.commentField:hover , .commentField:active{
+    box-shadow: 0 0 3px #00dfc4;
+}
 
+
+.sendButton{
+    background-color:transparent !important;
+    color: #00dfc4;
+    width: 20%;
+    font-size: 24px;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    transition: all .3s;
+   
+}
+.sendButton:hover , .sendButton:active{
+    box-shadow: 0 0 3px #00dfc4;
+}
 

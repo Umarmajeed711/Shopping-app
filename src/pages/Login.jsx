@@ -1,194 +1,250 @@
-import React, { useContext } from "react";
-import { Alert, Button, Snackbar, TextField } from "@mui/material";
-import axios from "axios";
-import { useFormik } from "formik";
-import { useState } from "react";
+import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword,
+   signInWithPopup, GoogleAuthProvider,GithubAuthProvider } from "firebase/auth";
+// import { useNavigate } from 'react-router';
+import "../App.css";
+// import yup
 import * as yup from "yup";
-import { useNavigate } from "react-router";
-import { GlobalContext } from "../context/Context";
-import "./home.css";
 
-import logo from "../assets/image.png";
+// import formik hook
+import { useFormik } from "formik";
+import { Link } from "react-router";
+import { useState } from "react";
+import { Button, Modal } from "react-bootstrap";
+import { BsGithub } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
+import './login.css'
+
 
 const Login = () => {
-  // context api
-  let { state, dispatch } = useContext(GlobalContext);
-  // state =  get the value
-  // dispatch = set the value
+  const auth = getAuth();
 
-  // State for error Message
-  const [errorMessage, setErrorMessage] = useState("");
+ 
 
-  // State for alert
-  const [alertOpen, setAlertOpen] = useState(false);
-
-  // Function for close alert
-  const alertClose = () => {
-    setAlertOpen(false);
-  };
-
-  // store useNavigate() hook in a const , for the navigation
-  const navigateToHome = useNavigate();
-
-  // login Validation
-  const loginValidaiton = yup.object({
-    userName: yup.string().required("Name is required"),
-    password: yup
+  //  Login Validation
+  const loginValidation = yup.object({
+    email: yup
       .string()
-      .required("password is required")
-      .min(6, "Minimun 6 character")
-      .max(12, "Maximun 12 charachters"),
-
-    // regax code for password validation
-    // matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$" ,
-    //  "Minimum eight and maximum 10 characters, at least one uppercase letter,
-    //  one lowercase letter, one number and one special character")
+      .email("enter a valid email")
+      .required("email is Required"),
+    password: yup
+      .string("Enter Password")
+      .required("Password is Required")
+      .min(6, "Minimum 6 characters")
+      .max(12, "Maximum 12 Characters"),
   });
 
-  // initailizes the loginFormik
-  const loginFormik = useFormik({
+  const loginformik = useFormik({
     initialValues: {
-      userName: "",
+      email: "",
       password: "",
     },
-
-    validationSchema: loginValidaiton,
-
+    validationSchema: loginValidation,
     onSubmit: (values) => {
-      axios
-        .post("https://dummyjson.com/auth/login", {
-          username: values.userName,
-          password: values.password,
-        })
-        .then((response) => {
-          console.log("response :", response);
-          // here we are set the type is "USER_LOGIN" and payload = response.data;
-          dispatch({ type: "USER_LOGIN", payload: response.data });
+      console.log("values", values);
 
-          // save the access token in the local storage
-          localStorage.setItem("userToken" , response?.data?.accessToken)
+      signInWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log("Res", user);
 
-          // navigate to the home page
-          setTimeout(() => {navigateToHome("/home")}, 5)
+          
+          // ...
         })
         .catch((error) => {
-          console.log("Error :", error);
-          setErrorMessage(error.response?.data?.message);
-          setAlertOpen(true);
+          console.log("Err", error);
+          const errorCode = error.code;
+
+          const errorMessage = error.message;
+          alert(errorMessage);
         });
     },
   });
+
+
+  // forget password 
+
+  const [show,setShow] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
+  // function for forget password
+  const forgetPassword = () => {
+    sendPasswordResetEmail(auth, userEmail)
+  .then(() => {
+    // Password reset email sent!
+    console.log("Password reset email sent!");
+    handleClose()
+    
+    // ..
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+  }
+
+  // function for close modals
+  const handleClose = () => {
+    setShow(false);
+    setUserEmail("");
+  }
+
+
+ 
+// google auth provider
+const Googleprovider = new GoogleAuthProvider();
+
+const loginWithGoogle = () => {
+
+  signInWithPopup(auth, Googleprovider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage);
+    
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    
+    // ...
+  });
+
+}
+
+
+// Login with Github
+
+
+const Githubprovider = new GithubAuthProvider();
+const loginWithGithub = () => {
+
+  signInWithPopup(auth, Githubprovider)
+  .then((result) => {
+    // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+    const credential = GithubAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    console.log(user);
+    
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage)
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GithubAuthProvider.credentialFromError(error);
+    // ...
+  });
+}
+ 
+
+
+
+
+
   return (
-    <div>
-      <form onSubmit={loginFormik.handleSubmit}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          {/* login div */}
-          <div
-            className="d-flex justify-content-evenly gap-5 align-items-center p-5"
-            style={{
-              border: " 2px solid gray",
-              height: "60%",
-              borderRadius: "5px",
-              boxShadow: "0 0 5px black",
-              backgroundColor: "#f1e9e9",
-            }}
-          >
-            {/* image div */}
-            <div>
-              <h3 style={{ textAlign: "center" }}>HUB</h3>
-              <img
-                src={logo}
-                alt="logo"
-                width={200}
-                height={200}
-                style={{ borderRadius: "50%", boxShadow: "0 0 5px black" }}
-              />
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column",
-              }}
-            >
-              <h1
-                style={{
-                  textAlign: "center",
-                  padding: "20px",
-                  color: "#f1e9e9",
-                  textShadow: "1px 1px 5px rgba(0,0,0,1)",
-                }}
-              >
-                Login
-              </h1>
-              {/* user Name input field */}
-              <TextField
-                name="userName"
-                label="User Name"
-                value={loginFormik.values.userName}
-                onChange={loginFormik.handleChange}
-                error={
-                  loginFormik.touched.userName &&
-                  Boolean(loginFormik.errors.userName)
-                }
-                helperText={
-                  loginFormik.touched.userName && loginFormik.errors.userName
-                }
-              />
-
-              <br />
-
-              {/* password Input field */}
-
-              <TextField
-                name="password"
-                label="password"
-                value={loginFormik.values.password}
-                onChange={loginFormik.handleChange}
-                error={
-                  loginFormik.touched.password &&
-                  Boolean(loginFormik.errors.password)
-                }
-                helperText={
-                  loginFormik.touched.password && loginFormik.errors.password
-                }
-              />
-
-              <br />
-
-              {/* login Button */}
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button color="primary" variant="outlined" type="submit">
-                  Login
-                </Button>
-              </div>
-            </div>
-          </div>
-          {/* Snackbar for showing error */}
-          <Snackbar
-            open={alertOpen}
-            autoHideDuration={3000}
-            onClose={alertClose}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
-          >
-            <Alert onClose={alertClose} severity="error" sx={{ width: "100%" }}>
-              {errorMessage}
-            </Alert>
-          </Snackbar>
+    <div className="body">
+      <form onSubmit={loginformik.handleSubmit} className="formDiv p-4  ">
+        <div className="loginHeading my-3">
+          Login
         </div>
+        <div className="inputBox">
+          <input
+            type="text"
+            name="email"
+            value={loginformik.values.email}
+            onChange={loginformik.handleChange}
+          />
+          <span>Email</span>
+          {loginformik.touched.email && Boolean(loginformik.errors.email) ? (
+            <p className="requiredError">
+              {loginformik.touched.email && loginformik.errors.email}
+            </p>
+          ) : null}
+        </div>
+        <br />
+        <div className="inputBox">
+          <input
+            type="text"
+            name="password"
+            value={loginformik.values.password}
+            onChange={loginformik.handleChange}
+          />
+          <span>Password</span>
+          {loginformik.touched.password &&
+          Boolean(loginformik.errors.password) ? (
+            <p className="requiredError">
+              {loginformik.touched.password && loginformik.errors.password}
+            </p>
+          ) : null}
+        </div>
+        <br />
+        <div>
+          <p className="forget" onClick={() => {setShow(true)}}>Forget password?</p>
+        </div>
+        <div className="d-flex flex-column gap-2">
+        <div onClick={loginWithGoogle} className="loginWith"><span className="icons"><FcGoogle/></span>Login with Google</div>
+        <div onClick={loginWithGithub} className="loginWith"><span className="icons">< BsGithub/></span> Login with Github</div>
+        </div>
+        <br />
+
+        <button className="button" type="submit">
+          Login
+        </button>
+        <br />
+        
+        <div>
+          <p>Don't have an account? <Link to={"/Signup"} className="forget">Signup</Link></p>
+        </div>
+        
       </form>
+
+     
+
+
+      {/* // forget password modal */}
+      <div>
+      <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Forget Password</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <label htmlFor="">
+                    Enter Email : <input type="email" value={userEmail} onChange={(e) => {setUserEmail(e.target.value)}} />
+                </label>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={forgetPassword}>
+                    Send Email
+                </Button>
+            </Modal.Footer>
+        </Modal>
+        </div>
+
+
+
+       
+        
     </div>
   );
 };
